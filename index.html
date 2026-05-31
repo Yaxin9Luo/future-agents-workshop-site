@@ -1,0 +1,1380 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="NeurIPS 2026 Workshop on Exploring the Future and Limitations of Agents.">
+  <title>Exploring the Future and Limitations of Agents | NeurIPS 2026 Workshop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Sora:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #08090a;
+      --ink-soft: #151719;
+      --paper: #f4f1ea;
+      --paper-strong: #fffaf0;
+      --text: #111315;
+      --muted: #626866;
+      --line: #d9d5ca;
+      --cyan: #27d5d0;
+      --lime: #c9e84e;
+      --coral: #ff7d66;
+      --violet-free: #25302b;
+      --radius: 8px;
+      --max: 1180px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--text);
+      font-family: "IBM Plex Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 17px;
+      line-height: 1.65;
+    }
+
+    a {
+      color: inherit;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 4px;
+    }
+
+    .site-shell {
+      overflow: hidden;
+      background:
+        linear-gradient(180deg, rgba(8, 9, 10, 0) 0, rgba(8, 9, 10, 0) 760px, var(--paper) 760px),
+        var(--paper);
+    }
+
+    .hero {
+      position: relative;
+      min-height: 760px;
+      color: #fffaf0;
+      background: var(--ink);
+      isolation: isolate;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -3;
+      background-image: url("assets/future-agents-hero.png");
+      background-position: center;
+      background-size: cover;
+      opacity: 0.78;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      background:
+        linear-gradient(90deg, rgba(8, 9, 10, 0.96) 0%, rgba(8, 9, 10, 0.9) 30%, rgba(8, 9, 10, 0.42) 66%, rgba(8, 9, 10, 0.12) 100%),
+        linear-gradient(180deg, rgba(8, 9, 10, 0.04) 0%, rgba(8, 9, 10, 0.58) 100%);
+    }
+
+    .scan-grid {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      opacity: 0.16;
+      background-image:
+        linear-gradient(rgba(255, 250, 240, 0.09) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 250, 240, 0.09) 1px, transparent 1px);
+      background-size: 56px 56px;
+      mask-image: linear-gradient(90deg, #000 0%, transparent 72%);
+    }
+
+    .nav-wrap {
+      width: min(var(--max), calc(100% - 48px));
+      margin: 0 auto;
+      padding: 28px 0 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 16px;
+      min-width: 0;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 250px;
+      text-decoration: none;
+    }
+
+    .brand-mark {
+      width: 48px;
+      height: 48px;
+      border: 1px solid rgba(255, 250, 240, 0.28);
+      border-radius: var(--radius);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      padding: 7px;
+      gap: 5px;
+      background: rgba(255, 250, 240, 0.08);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.32);
+    }
+
+    .brand-mark span {
+      border-radius: 4px;
+      border: 1px solid rgba(255, 250, 240, 0.24);
+      background: rgba(255, 250, 240, 0.09);
+    }
+
+    .brand-mark span:nth-child(1) { background: var(--cyan); }
+    .brand-mark span:nth-child(2) { background: rgba(255, 250, 240, 0.18); }
+    .brand-mark span:nth-child(3) { background: var(--lime); }
+    .brand-mark span:nth-child(4) { background: var(--coral); }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .brand-text strong {
+      font-family: "Sora", system-ui, sans-serif;
+      font-size: 15px;
+      line-height: 1.2;
+    }
+
+    .brand-text span {
+      color: rgba(255, 250, 240, 0.72);
+      font-size: 13px;
+      line-height: 1.2;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      color: rgba(255, 250, 240, 0.78);
+      font-size: 13.5px;
+      font-weight: 600;
+      white-space: nowrap;
+      scrollbar-width: none;
+    }
+
+    nav::-webkit-scrollbar {
+      display: none;
+    }
+
+    nav a {
+      text-decoration: none;
+    }
+
+    nav a:hover,
+    nav a:focus-visible {
+      color: #fffaf0;
+    }
+
+    .nav-action {
+      border: 1px solid rgba(255, 250, 240, 0.26);
+      border-radius: var(--radius);
+      padding: 9px 12px;
+      color: #fffaf0;
+      background: rgba(255, 250, 240, 0.08);
+    }
+
+    .conference-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: 0 0 auto;
+      width: 128px;
+      min-height: 48px;
+      padding: 10px 12px;
+      border: 1px solid rgba(255, 250, 240, 0.28);
+      border-radius: var(--radius);
+      background: rgba(255, 250, 240, 0.94);
+      box-shadow: 0 18px 44px rgba(0, 0, 0, 0.24);
+      text-decoration: none;
+    }
+
+    .conference-badge img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .hero-content {
+      width: min(var(--max), calc(100% - 48px));
+      min-height: 620px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 720px) minmax(260px, 1fr);
+      align-items: end;
+      gap: 34px;
+      padding: 86px 0 66px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 22px;
+      color: rgba(255, 250, 240, 0.76);
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 34px;
+      height: 2px;
+      background: var(--lime);
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+      margin: 0;
+      font-family: "Sora", system-ui, sans-serif;
+      line-height: 1.05;
+      letter-spacing: 0;
+    }
+
+    h1 {
+      max-width: 820px;
+      font-size: 74px;
+    }
+
+    .hero-copy {
+      max-width: 660px;
+      margin: 28px 0 0;
+      color: rgba(255, 250, 240, 0.82);
+      font-size: 20px;
+      line-height: 1.55;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 34px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 12px 17px;
+      border: 1px solid transparent;
+      border-radius: var(--radius);
+      font-weight: 700;
+      text-decoration: none;
+      line-height: 1.2;
+      transition: transform 140ms ease, border-color 140ms ease, background 140ms ease;
+    }
+
+    .button:hover,
+    .button:focus-visible {
+      transform: translateY(-1px);
+    }
+
+    .button.primary {
+      color: var(--ink);
+      background: var(--lime);
+    }
+
+    .button.secondary {
+      color: #fffaf0;
+      border-color: rgba(255, 250, 240, 0.24);
+      background: rgba(255, 250, 240, 0.08);
+    }
+
+    .hero-panel {
+      align-self: end;
+      display: grid;
+      gap: 12px;
+      padding-bottom: 6px;
+    }
+
+    .signal-card {
+      border: 1px solid rgba(255, 250, 240, 0.18);
+      border-radius: var(--radius);
+      padding: 18px;
+      background: rgba(8, 9, 10, 0.58);
+      backdrop-filter: blur(16px);
+    }
+
+    .signal-card span {
+      display: block;
+      color: rgba(255, 250, 240, 0.56);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .signal-card strong {
+      display: block;
+      margin-top: 6px;
+      color: #fffaf0;
+      font-size: 20px;
+      line-height: 1.25;
+    }
+
+    .signal-card em {
+      display: block;
+      margin-top: 8px;
+      color: rgba(255, 250, 240, 0.68);
+      font-style: normal;
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .info-strip {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      width: min(var(--max), calc(100% - 48px));
+      margin: -44px auto 0;
+      border: 1px solid rgba(8, 9, 10, 0.1);
+      border-radius: var(--radius);
+      background: var(--paper-strong);
+      box-shadow: 0 28px 70px rgba(8, 9, 10, 0.16);
+      position: relative;
+      z-index: 3;
+    }
+
+    .info-item {
+      padding: 24px;
+      min-height: 124px;
+      border-right: 1px solid var(--line);
+    }
+
+    .info-item:last-child {
+      border-right: 0;
+    }
+
+    .info-item span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .info-item strong {
+      display: block;
+      margin-top: 8px;
+      font-size: 22px;
+      line-height: 1.2;
+    }
+
+    .band {
+      padding: 88px 0;
+    }
+
+    .band.alt {
+      background: #e8e3d7;
+    }
+
+    .band.dark {
+      color: #fffaf0;
+      background: var(--ink-soft);
+    }
+
+    .wrap {
+      width: min(var(--max), calc(100% - 48px));
+      margin: 0 auto;
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(220px, 360px) minmax(0, 1fr);
+      gap: 48px;
+      align-items: start;
+      margin-bottom: 34px;
+    }
+
+    .section-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: #45504b;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .section-kicker::before {
+      content: "";
+      width: 26px;
+      height: 2px;
+      background: var(--coral);
+    }
+
+    .dark .section-kicker {
+      color: rgba(255, 250, 240, 0.68);
+    }
+
+    h2 {
+      font-size: 42px;
+    }
+
+    .section-lede {
+      margin: 0;
+      color: var(--muted);
+      font-size: 21px;
+      line-height: 1.55;
+    }
+
+    .dark .section-lede {
+      color: rgba(255, 250, 240, 0.68);
+    }
+
+    .story-grid {
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 26px;
+      align-items: stretch;
+    }
+
+    .manifesto {
+      padding: 34px;
+      border-left: 6px solid var(--cyan);
+      background: var(--paper-strong);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+
+    .manifesto p {
+      margin: 0;
+      font-size: 23px;
+      line-height: 1.5;
+    }
+
+    .limits-stack {
+      display: grid;
+      gap: 12px;
+    }
+
+    .limit-row {
+      display: grid;
+      grid-template-columns: 64px 1fr;
+      gap: 16px;
+      align-items: start;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 250, 240, 0.56);
+    }
+
+    .limit-row b {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 46px;
+      height: 46px;
+      border-radius: var(--radius);
+      color: var(--ink);
+      background: var(--lime);
+      font-family: "Sora", system-ui, sans-serif;
+      font-size: 15px;
+    }
+
+    .limit-row strong {
+      display: block;
+      font-size: 18px;
+      line-height: 1.25;
+    }
+
+    .limit-row span {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .topic-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .topic-card {
+      min-height: 218px;
+      padding: 22px;
+      border: 1px solid rgba(255, 250, 240, 0.14);
+      border-radius: var(--radius);
+      background:
+        linear-gradient(180deg, rgba(255, 250, 240, 0.08), rgba(255, 250, 240, 0.03)),
+        #101315;
+    }
+
+    .topic-card:nth-child(2n) {
+      border-top-color: rgba(39, 213, 208, 0.5);
+    }
+
+    .topic-card:nth-child(3n) {
+      border-top-color: rgba(201, 232, 78, 0.5);
+    }
+
+    .topic-card h3 {
+      font-size: 21px;
+    }
+
+    .topic-card p {
+      margin: 14px 0 0;
+      color: rgba(255, 250, 240, 0.66);
+      line-height: 1.5;
+    }
+
+    .submission-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+      gap: 30px;
+      align-items: start;
+    }
+
+    .plain-copy p {
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 19px;
+    }
+
+    .plain-copy p:last-child {
+      margin-bottom: 0;
+    }
+
+    .check-list {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .check-list li {
+      display: grid;
+      grid-template-columns: 18px 1fr;
+      gap: 12px;
+      align-items: start;
+      padding: 15px 0;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+    }
+
+    .check-list li::before {
+      content: "";
+      width: 10px;
+      height: 10px;
+      margin-top: 9px;
+      border-radius: 2px;
+      background: var(--coral);
+    }
+
+    .check-list strong {
+      color: var(--text);
+    }
+
+    .date-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      border-top: 1px solid var(--line);
+      border-left: 1px solid var(--line);
+    }
+
+    .date-card {
+      min-height: 168px;
+      padding: 22px;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 250, 240, 0.52);
+    }
+
+    .date-card span {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .date-card strong {
+      display: block;
+      margin-top: 14px;
+      font-size: 22px;
+      line-height: 1.2;
+    }
+
+    .date-card em {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+      font-style: normal;
+      font-size: 14px;
+    }
+
+    .program {
+      display: grid;
+      gap: 1px;
+      border: 1px solid rgba(255, 250, 240, 0.14);
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: rgba(255, 250, 240, 0.14);
+    }
+
+    .program-row {
+      display: grid;
+      grid-template-columns: 190px 1fr 260px;
+      gap: 22px;
+      padding: 22px;
+      background: #101315;
+    }
+
+    .program-row span {
+      color: var(--lime);
+      font-weight: 700;
+    }
+
+    .program-row strong {
+      color: #fffaf0;
+      font-size: 19px;
+    }
+
+    .program-row p {
+      margin: 6px 0 0;
+      color: rgba(255, 250, 240, 0.62);
+      line-height: 1.45;
+    }
+
+    .people-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .people-card {
+      min-height: 236px;
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--paper-strong);
+    }
+
+    .people-card .tag {
+      display: inline-flex;
+      margin-bottom: 26px;
+      padding: 6px 9px;
+      border-radius: 6px;
+      color: var(--ink);
+      background: var(--cyan);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .people-card h3 {
+      font-size: 24px;
+    }
+
+    .people-card p {
+      margin: 12px 0 0;
+      color: var(--muted);
+    }
+
+    .sponsor-band {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      align-items: stretch;
+    }
+
+    .sponsor-note {
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--paper-strong);
+    }
+
+    .sponsor-note h3 {
+      font-size: 24px;
+    }
+
+    .sponsor-note p {
+      margin: 12px 0 0;
+      color: var(--muted);
+    }
+
+    .references-card {
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--paper-strong);
+    }
+
+    .reference-list {
+      display: grid;
+      gap: 12px;
+      margin: 20px 0 0;
+      padding: 0;
+      list-style: none;
+      counter-reset: reference;
+    }
+
+    .reference-list li {
+      counter-increment: reference;
+      display: grid;
+      grid-template-columns: 44px 1fr;
+      gap: 16px;
+      padding: 16px 0;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+    }
+
+    .reference-list li::before {
+      content: "[" counter(reference) "]";
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    .reference-list strong {
+      display: block;
+      color: var(--text);
+    }
+
+    .contact {
+      padding: 42px;
+      border-radius: var(--radius);
+      color: #fffaf0;
+      background:
+        linear-gradient(90deg, rgba(39, 213, 208, 0.18), rgba(255, 125, 102, 0.13)),
+        var(--ink);
+    }
+
+    .contact h2 {
+      max-width: 760px;
+    }
+
+    .contact p {
+      max-width: 760px;
+      margin: 18px 0 0;
+      color: rgba(255, 250, 240, 0.72);
+      font-size: 19px;
+    }
+
+    .contact a {
+      color: #fffaf0;
+      font-weight: 700;
+    }
+
+    footer {
+      padding: 34px 0 48px;
+      color: #747a76;
+      font-size: 14px;
+    }
+
+    footer .wrap {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      border-top: 1px solid var(--line);
+      padding-top: 24px;
+    }
+
+    @media (max-width: 980px) {
+      .nav-wrap {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .nav-right {
+        width: 100%;
+        justify-content: space-between;
+        align-items: flex-start;
+      }
+
+      nav {
+        width: 100%;
+        overflow-x: auto;
+        padding-bottom: 6px;
+      }
+
+      .hero-content {
+        grid-template-columns: 1fr;
+        align-items: start;
+        padding-top: 74px;
+      }
+
+      h1 {
+        font-size: 58px;
+      }
+
+      .info-strip,
+      .topic-grid,
+      .date-grid,
+      .people-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .info-item:nth-child(2) {
+        border-right: 0;
+      }
+
+      .info-item:nth-child(-n + 2) {
+        border-bottom: 1px solid var(--line);
+      }
+
+      .section-head,
+      .story-grid,
+      .submission-layout,
+      .sponsor-band {
+        grid-template-columns: 1fr;
+      }
+
+      .program-row {
+        grid-template-columns: 150px 1fr;
+      }
+
+      .program-row .program-meta {
+        grid-column: 2;
+      }
+    }
+
+    @media (max-width: 680px) {
+      body {
+        font-size: 16px;
+      }
+
+      .hero {
+        min-height: 780px;
+      }
+
+      .hero::before {
+        background-position: 58% center;
+      }
+
+      .hero::after {
+        background:
+          linear-gradient(180deg, rgba(8, 9, 10, 0.92) 0%, rgba(8, 9, 10, 0.72) 58%, rgba(8, 9, 10, 0.9) 100%);
+      }
+
+      .nav-wrap,
+      .hero-content,
+      .info-strip,
+      .wrap {
+        width: min(100% - 32px, var(--max));
+      }
+
+      .brand {
+        min-width: 0;
+      }
+
+      nav {
+        flex-wrap: wrap;
+        white-space: normal;
+        overflow: visible;
+        gap: 10px 14px;
+        padding-bottom: 0;
+      }
+
+      .nav-right {
+        flex-direction: column-reverse;
+        align-items: flex-end;
+        gap: 16px;
+      }
+
+      .conference-badge {
+        width: 118px;
+        min-height: 44px;
+      }
+
+      h1 {
+        font-size: 42px;
+      }
+
+      h2 {
+        font-size: 31px;
+      }
+
+      .hero-copy,
+      .section-lede,
+      .plain-copy p,
+      .contact p {
+        font-size: 18px;
+      }
+
+      .hero-content {
+        min-height: 610px;
+        padding-bottom: 40px;
+      }
+
+      .info-strip,
+      .topic-grid,
+      .date-grid,
+      .people-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .info-item,
+      .info-item:nth-child(2) {
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .info-item:last-child {
+        border-bottom: 0;
+      }
+
+      .band {
+        padding: 64px 0;
+      }
+
+      .manifesto,
+      .contact {
+        padding: 24px;
+      }
+
+      .manifesto p {
+        font-size: 20px;
+      }
+
+      .limit-row,
+      .program-row {
+        grid-template-columns: 1fr;
+      }
+
+      .reference-list li {
+        grid-template-columns: 1fr;
+        gap: 6px;
+      }
+
+      .program-row .program-meta {
+        grid-column: auto;
+      }
+
+      footer .wrap {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="site-shell">
+    <header id="top" class="hero">
+      <div class="scan-grid" aria-hidden="true"></div>
+      <div class="nav-wrap">
+        <a class="brand" href="#top" aria-label="Workshop home">
+          <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+          <span class="brand-text">
+            <strong>Future Agents</strong>
+            <span>NeurIPS 2026 Workshop</span>
+          </span>
+        </a>
+        <div class="nav-right">
+          <nav aria-label="Primary navigation">
+            <a href="#submission">Call for Papers</a>
+            <a href="#schedule">Schedule</a>
+            <a href="#speakers">Speakers</a>
+            <a href="#organizers">Organizers</a>
+            <a href="#sponsors">Sponsors</a>
+            <a href="papers.html">Accepted Papers</a>
+            <a href="#contact">Contact</a>
+          </nav>
+          <a class="conference-badge" href="https://neurips.cc/Conferences/2026" target="_blank" rel="noopener" aria-label="NeurIPS 2026">
+            <img src="assets/neurips-logo.svg" alt="NeurIPS">
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-content">
+        <div>
+          <p class="eyebrow">NeurIPS 2026 Workshop</p>
+          <h1>Exploring the Future and Limitations of Agents</h1>
+          <p class="hero-copy">A workshop for researchers building, measuring, and stress-testing agentic AI systems beyond polished demos: long-horizon reliability, tool use, autonomy boundaries, evaluation, safety, and the messy interface between models and real environments.</p>
+          <div class="hero-actions">
+            <a class="button primary" href="#submission">Call for Papers</a>
+            <a class="button secondary" href="#schedule">Schedule</a>
+          </div>
+        </div>
+
+        <aside class="hero-panel" aria-label="Workshop status">
+          <div class="signal-card">
+            <span>Format</span>
+            <strong>Full-day workshop at NeurIPS 2026</strong>
+            <em>Exact date, room, and submission portal will be updated after conference confirmation.</em>
+          </div>
+          <div class="signal-card">
+            <span>Position</span>
+            <strong>Capability and limitation in the same room</strong>
+            <em>We are interested in what agents can do, where they fail, and how the field should evaluate both.</em>
+          </div>
+        </aside>
+      </div>
+    </header>
+
+    <section class="info-strip" aria-label="Key workshop facts">
+      <div class="info-item">
+        <span>Conference</span>
+        <strong>NeurIPS 2026</strong>
+      </div>
+      <div class="info-item">
+        <span>Workshop Days</span>
+        <strong>TBA</strong>
+      </div>
+      <div class="info-item">
+        <span>Location</span>
+        <strong>TBA</strong>
+      </div>
+      <div class="info-item">
+        <span>Submission</span>
+        <strong>Portal TBA</strong>
+      </div>
+    </section>
+
+    <main>
+      <section id="about" class="band">
+        <div class="wrap">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Why this workshop</p>
+              <h2>Agents are leaving the benchmark box.</h2>
+            </div>
+            <p class="section-lede">The next generation of AI systems will browse, code, call tools, manage memory, coordinate with people, and act over long horizons. The field needs a sharper conversation about the future of this paradigm and the limits that remain when agents meet real tasks.</p>
+          </div>
+
+          <div class="story-grid">
+            <div class="manifesto">
+              <p>We want this workshop to be a meeting point for ambitious systems work and skeptical measurement. Strong agents should be paired with strong failure analysis: autonomy boundaries, escalation policies, robustness, human oversight, compute cost, privacy, and evaluation protocols that survive contact with real workflows.</p>
+            </div>
+            <div class="limits-stack">
+              <div class="limit-row">
+                <b>01</b>
+                <div>
+                  <strong>From tasks to trajectories</strong>
+                  <span>How should we measure agents that plan, recover, delegate, and learn from interaction rather than answer once?</span>
+                </div>
+              </div>
+              <div class="limit-row">
+                <b>02</b>
+                <div>
+                  <strong>From capability to control</strong>
+                  <span>Where should agents be allowed to act, when should they ask, and how should systems expose uncertainty?</span>
+                </div>
+              </div>
+              <div class="limit-row">
+                <b>03</b>
+                <div>
+                  <strong>From demos to evidence</strong>
+                  <span>What experimental standards make agent claims reproducible across environments, users, and time?</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="topics" class="band dark">
+        <div class="wrap">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Scope</p>
+              <h2>Core questions for agent research.</h2>
+            </div>
+            <p class="section-lede">We welcome technical papers, empirical studies, position papers, datasets, benchmarks, tools, and deployed-system analyses that make agentic systems more capable, more measurable, or more honest about their limits.</p>
+          </div>
+
+          <div class="topic-grid">
+            <article class="topic-card">
+              <h3>Long-horizon reliability</h3>
+              <p>Planning, memory, recovery, self-correction, and failure modes over multi-step tasks.</p>
+            </article>
+            <article class="topic-card">
+              <h3>Computer and tool use</h3>
+              <p>Agents operating browsers, terminals, IDEs, APIs, simulations, robots, and scientific instruments.</p>
+            </article>
+            <article class="topic-card">
+              <h3>Evaluation protocols</h3>
+              <p>Benchmarks, human studies, automatic judging, contamination control, and reproducibility.</p>
+            </article>
+            <article class="topic-card">
+              <h3>Limits of autonomy</h3>
+              <p>Escalation, uncertainty, intervention, safe fallback, delegation, and human-agent collaboration.</p>
+            </article>
+            <article class="topic-card">
+              <h3>Learning from interaction</h3>
+              <p>Memory updates, preference learning, environment feedback, online adaptation, and continual improvement.</p>
+            </article>
+            <article class="topic-card">
+              <h3>Security and governance</h3>
+              <p>Prompt injection, tool misuse, privacy, audit trails, authorization, monitoring, and deployment policy.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="submission" class="band alt">
+        <div class="wrap">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Submission</p>
+              <h2>Call for Papers</h2>
+            </div>
+            <p class="section-lede">Formal page limits, formatting rules, anonymity policy, and the submission portal will be updated after the NeurIPS 2026 workshop process is finalized.</p>
+          </div>
+
+          <div class="submission-layout">
+            <div class="plain-copy">
+              <p>We are especially interested in work that connects engineering detail with principled evaluation. Agent research often moves quickly from impressive demos to broad claims; this workshop will privilege papers that make those claims testable.</p>
+              <p>Expected formats include technical papers, empirical studies, benchmark or dataset papers, systems papers, and position papers. We will also welcome rigorous negative results and limitation analyses.</p>
+              <div class="hero-actions">
+                <a class="button primary" href="#contact">Submission Portal TBA</a>
+                <a class="button secondary" href="papers.html">Accepted Papers</a>
+              </div>
+            </div>
+            <ul class="check-list">
+              <li><span><strong>Methods:</strong> new agent architectures, memory systems, planning loops, verification layers, and tool-use mechanisms.</span></li>
+              <li><span><strong>Evaluations:</strong> benchmarks, protocols, datasets, judges, and analysis methods for real-world agent behavior.</span></li>
+              <li><span><strong>Systems:</strong> deployed agents, research infrastructure, sandboxing, monitoring, and reproducible harnesses.</span></li>
+              <li><span><strong>Limitations:</strong> negative results, failure taxonomies, reliability studies, safety analysis, and governance proposals.</span></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="schedule" class="band">
+        <div class="wrap">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Schedule</p>
+              <h2>Important Dates</h2>
+            </div>
+            <p class="section-lede">Dates will be announced after NeurIPS 2026 workshop scheduling and submission infrastructure are finalized. All deadlines use AoE (Anywhere on Earth) unless otherwise stated.</p>
+          </div>
+
+          <div class="date-grid">
+            <div class="date-card">
+              <span>Paper Submission Open</span>
+              <strong>TBA</strong>
+              <em>AoE. Submission portal pending.</em>
+            </div>
+            <div class="date-card">
+              <span>Paper Submission Deadline</span>
+              <strong>TBA</strong>
+              <em>AoE.</em>
+            </div>
+            <div class="date-card">
+              <span>Review Deadline for Reviewers</span>
+              <strong>TBA</strong>
+              <em>AoE.</em>
+            </div>
+            <div class="date-card">
+              <span>Author Notification</span>
+              <strong>TBA</strong>
+              <em>AoE.</em>
+            </div>
+            <div class="date-card">
+              <span>Workshop Days</span>
+              <strong>TBA</strong>
+              <em>NeurIPS 2026 workshop schedule pending.</em>
+            </div>
+            <div class="date-card">
+              <span>Location</span>
+              <strong>TBA</strong>
+              <em>NeurIPS 2026 venue details pending.</em>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="workshop-flow" class="band dark">
+        <div class="wrap">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Workshop flow</p>
+              <h2>A workshop built around evidence.</h2>
+            </div>
+            <p class="section-lede">The exact timetable will be announced after speaker invitations and paper decisions are finalized. The outline below reflects the expected structure of the day.</p>
+          </div>
+
+          <div class="program" aria-label="Workshop schedule">
+            <div class="program-row">
+              <span>Session 01</span>
+              <div>
+                <strong>Opening: where agents are actually working</strong>
+                <p>Framing talks on production use, research use, and the gaps between the two.</p>
+              </div>
+              <p class="program-meta">Invited talks TBA</p>
+            </div>
+            <div class="program-row">
+              <span>Session 02</span>
+              <div>
+                <strong>Evaluation beyond single-turn benchmarks</strong>
+                <p>Oral papers and discussion on long-horizon tasks, contamination, judges, and reproducibility.</p>
+              </div>
+              <p class="program-meta">Accepted papers</p>
+            </div>
+            <div class="program-row">
+              <span>Session 03</span>
+              <div>
+                <strong>Limits, safeguards, and human control</strong>
+                <p>Panel on autonomy boundaries, monitoring, authority, interventions, and failure disclosure.</p>
+              </div>
+              <p class="program-meta">Panelists TBA</p>
+            </div>
+            <div class="program-row">
+              <span>Session 04</span>
+              <div>
+                <strong>Posters, demos, and live systems</strong>
+                <p>Hands-on session for agent benchmarks, tools, harnesses, demos, and negative-result case studies.</p>
+              </div>
+              <p class="program-meta">Community session</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="speakers" class="band">
+        <div class="wrap">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Speakers</p>
+              <h2>Invited speakers and panels.</h2>
+            </div>
+            <p class="section-lede">Confirmed invited speakers, panelists, and session moderators will be announced here as invitations are finalized.</p>
+          </div>
+
+          <div class="people-grid">
+            <article class="people-card">
+              <span class="tag">Speakers</span>
+              <h3>Invited lineup TBA</h3>
+              <p>Use this block for confirmed invited speakers, panels, and keynote-style sessions.</p>
+            </article>
+            <article class="people-card">
+              <span class="tag">Panels</span>
+              <h3>Discussion format TBA</h3>
+              <p>Panel topics can focus on autonomy boundaries, evaluation, agent safety, and deployment lessons.</p>
+            </article>
+            <article class="people-card">
+              <span class="tag">Demos</span>
+              <h3>Live systems TBA</h3>
+              <p>Accepted demos and benchmark presentations can be highlighted once the submission process is complete.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="organizers" class="band alt">
+        <div class="wrap">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Organizers</p>
+              <h2>Workshop committee.</h2>
+            </div>
+            <p class="section-lede">Confirmed organizers, affiliations, websites, and contact roles will be announced here.</p>
+          </div>
+
+          <div class="people-grid">
+            <article class="people-card">
+              <span class="tag">General chairs</span>
+              <h3>Names TBA</h3>
+              <p>Lead organizers and primary points of contact.</p>
+            </article>
+            <article class="people-card">
+              <span class="tag">Review committee</span>
+              <h3>Review team TBA</h3>
+              <p>Area chairs, reviewers, and session leads can be listed here after confirmation.</p>
+            </article>
+            <article class="people-card">
+              <span class="tag">Operations</span>
+              <h3>Website and logistics TBA</h3>
+              <p>Use this slot for proceedings, website, sponsor, demo, and local logistics roles.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="sponsors" class="band">
+        <div class="wrap">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Sponsors</p>
+              <h2>Sponsors and partners.</h2>
+            </div>
+            <p class="section-lede">This section is reserved for confirmed academic partners, industry partners, compute sponsors, award sponsors, and demo-session supporters.</p>
+          </div>
+
+          <div class="sponsor-band">
+            <div class="sponsor-note">
+              <h3>Academic partners</h3>
+              <p>Universities, research labs, and nonprofit groups supporting the workshop can be listed here.</p>
+            </div>
+            <div class="sponsor-note">
+              <h3>Industry partners</h3>
+              <p>Company sponsors, compute sponsors, demo partners, and award sponsors can be added once confirmed.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" class="band">
+        <div class="wrap">
+          <div class="contact">
+            <p class="eyebrow">Contact</p>
+            <h2>Send confirmed names, dates, and submission details when ready.</h2>
+            <p>Organizer contact information will be announced here.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="references" class="band alt">
+        <div class="wrap">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">References</p>
+              <h2>References</h2>
+            </div>
+            <p class="section-lede">This section will list papers, benchmarks, systems, and policy documents that frame the workshop theme.</p>
+          </div>
+
+          <div class="references-card">
+            <ol class="reference-list">
+              <li>
+                <span><strong>Agent evaluation and benchmarking references.</strong> TBA.</span>
+              </li>
+              <li>
+                <span><strong>Tool-use, computer-use, and long-horizon agent systems.</strong> TBA.</span>
+              </li>
+              <li>
+                <span><strong>Safety, governance, and limitations of autonomous agents.</strong> TBA.</span>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap">
+        <span>Exploring the Future and Limitations of Agents, NeurIPS 2026 Workshop.</span>
+        <span>NeurIPS 2026 Workshop website.</span>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
