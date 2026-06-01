@@ -1,4 +1,4 @@
-# How Far Can AI Agents Go? Capabilities, Bottlenecks, and the Future
+# How Far Can AI Agents Go? Capabilities, Bottlenecks, and Future Directions
 
 Static website for a NeurIPS 2026 workshop on AI agent capabilities, current bottlenecks, and future research directions.
 
