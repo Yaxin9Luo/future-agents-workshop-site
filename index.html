@@ -698,6 +698,73 @@
       color: var(--muted);
     }
 
+    .speaker-list-title {
+      margin: 0 0 26px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+      font-family: "Sora", system-ui, sans-serif;
+      font-size: 30px;
+      line-height: 1.15;
+    }
+
+    .speaker-list-title span {
+      color: #654b42;
+      font-family: "IBM Plex Sans", system-ui, sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    .speaker-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 38px 54px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .speaker-card {
+      min-width: 0;
+    }
+
+    .speaker-photo {
+      display: block;
+      width: 100%;
+      max-width: 192px;
+      aspect-ratio: 1;
+      border: 3px solid var(--paper-strong);
+      border-radius: var(--radius);
+      box-shadow: 0 18px 42px rgba(8, 9, 10, 0.12);
+      object-fit: cover;
+      object-position: center;
+      background: var(--paper-strong);
+    }
+
+    .speaker-profile-link {
+      display: block;
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .speaker-profile-link:hover h3,
+    .speaker-profile-link:focus-visible h3 {
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+    .speaker-card h3 {
+      margin-top: 16px;
+      font-size: 22px;
+      line-height: 1.2;
+    }
+
+    .speaker-card p {
+      margin: 8px 0 0;
+      color: #654b42;
+      font-size: 19px;
+      font-weight: 600;
+      line-height: 1.35;
+    }
+
     .sponsor-band {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -828,7 +895,8 @@
       .info-strip,
       .topic-grid,
       .date-grid,
-      .people-grid {
+      .people-grid,
+      .speaker-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
@@ -927,8 +995,21 @@
       .info-strip,
       .topic-grid,
       .date-grid,
-      .people-grid {
+      .people-grid,
+      .speaker-grid {
         grid-template-columns: 1fr;
+      }
+
+      .speaker-photo {
+        max-width: 176px;
+      }
+
+      .speaker-list-title {
+        font-size: 26px;
+      }
+
+      .speaker-list-title span {
+        font-size: 20px;
       }
 
       .info-item,
@@ -1254,26 +1335,54 @@
           <div class="section-head">
             <div>
               <p class="section-kicker">Speakers</p>
-              <h2>Invited speakers and panels.</h2>
+              <h2>Confirmed invited speakers.</h2>
             </div>
-            <p class="section-lede">Confirmed invited speakers, panelists, and session moderators will be announced here as invitations are finalized.</p>
+            <p class="section-lede">The following invited speakers have confirmed participation. Additional speakers, panelists, and session moderators will be updated as invitations are finalized.</p>
           </div>
 
-          <div class="people-grid">
-            <article class="people-card">
-              <span class="tag">Speakers</span>
-              <h3>Invited lineup TBA</h3>
-              <p>Use this block for confirmed invited speakers, panels, and keynote-style sessions.</p>
+          <h3 class="speaker-list-title">Speakers <span>(alphabetical order)</span></h3>
+          <div class="speaker-grid" aria-label="Confirmed invited speakers">
+            <article class="speaker-card">
+              <a class="speaker-profile-link" href="https://xiaocw11.github.io/" target="_blank" rel="noopener">
+                <img class="speaker-photo" src="assets/speakers/chaowei-xiao.jpg" alt="Chaowei Xiao">
+                <h3>Chaowei Xiao</h3>
+                <p>Johns Hopkins University / NVIDIA</p>
+              </a>
             </article>
-            <article class="people-card">
-              <span class="tag">Panels</span>
-              <h3>Discussion format TBA</h3>
-              <p>Panel topics can focus on capability frontiers, bottlenecks, evaluation, agent safety, and deployment lessons.</p>
+            <article class="speaker-card">
+              <a class="speaker-profile-link" href="https://people.eecs.berkeley.edu/~dawnsong/" target="_blank" rel="noopener">
+                <img class="speaker-photo" src="assets/speakers/dawn-song.jpg" alt="Dawn Song">
+                <h3>Dawn Song</h3>
+                <p>UC Berkeley</p>
+              </a>
             </article>
-            <article class="people-card">
-              <span class="tag">Demos</span>
-              <h3>Live systems TBA</h3>
-              <p>Accepted demos, benchmark presentations, and future-facing systems can be highlighted once the submission process is complete.</p>
+            <article class="speaker-card">
+              <a class="speaker-profile-link" href="https://cs.stanford.edu/people/diyiy/" target="_blank" rel="noopener">
+                <img class="speaker-photo" src="assets/speakers/diyi-yang.jpg" alt="Diyi Yang">
+                <h3>Diyi Yang</h3>
+                <p>Stanford University</p>
+              </a>
+            </article>
+            <article class="speaker-card">
+              <a class="speaker-profile-link" href="https://metauto.ai/" target="_blank" rel="noopener">
+                <img class="speaker-photo" src="assets/speakers/mingchen-zhuge.webp" alt="Mingchen Zhuge">
+                <h3>Mingchen Zhuge</h3>
+                <p>Recursive Intelligence</p>
+              </a>
+            </article>
+            <article class="speaker-card">
+              <a class="speaker-profile-link" href="https://scholar.google.com/citations?user=cpCE_T4AAAAJ&amp;hl=zh-CN" target="_blank" rel="noopener">
+                <img class="speaker-photo" src="assets/speakers/xiaotong-li.jpg" alt="Xiaotong Li">
+                <h3>Xiaotong Li</h3>
+                <p>M17 LongCat Team</p>
+              </a>
+            </article>
+            <article class="speaker-card">
+              <a class="speaker-profile-link" href="https://waterhorse1.github.io/" target="_blank" rel="noopener">
+                <img class="speaker-photo" src="assets/speakers/xidong-feng.jpg" alt="Xidong Feng">
+                <h3>Xidong Feng</h3>
+                <p>DeepMind</p>
+              </a>
             </article>
           </div>
         </div>
