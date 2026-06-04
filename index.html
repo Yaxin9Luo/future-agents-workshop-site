@@ -670,16 +670,33 @@
     }
 
     .people-card {
-      min-height: 236px;
+      min-height: 340px;
       padding: 22px;
       border: 1px solid var(--line);
       border-radius: var(--radius);
       background: var(--paper-strong);
     }
 
+    .people-photo {
+      display: block;
+      width: 136px;
+      aspect-ratio: 1;
+      margin-bottom: 18px;
+      border: 3px solid #fffaf0;
+      border-radius: var(--radius);
+      background: #fffaf0;
+      object-fit: cover;
+      object-position: center;
+      box-shadow: 0 18px 42px rgba(8, 9, 10, 0.12);
+    }
+
+    .people-photo.top {
+      object-position: center top;
+    }
+
     .people-card .tag {
       display: inline-flex;
-      margin-bottom: 26px;
+      margin-bottom: 20px;
       padding: 6px 9px;
       border-radius: 6px;
       color: var(--ink);
@@ -1340,15 +1357,8 @@
             <p class="section-lede">The following invited speakers have confirmed participation. Additional speakers, panelists, and session moderators will be updated as invitations are finalized.</p>
           </div>
 
-          <h3 class="speaker-list-title">Speakers <span>(alphabetical order)</span></h3>
+          <h3 class="speaker-list-title">Speakers</h3>
           <div class="speaker-grid" aria-label="Confirmed invited speakers">
-            <article class="speaker-card">
-              <a class="speaker-profile-link" href="https://xiaocw11.github.io/" target="_blank" rel="noopener">
-                <img class="speaker-photo" src="assets/speakers/chaowei-xiao.jpg" alt="Chaowei Xiao">
-                <h3>Chaowei Xiao</h3>
-                <p>Johns Hopkins University / NVIDIA</p>
-              </a>
-            </article>
             <article class="speaker-card">
               <a class="speaker-profile-link" href="https://people.eecs.berkeley.edu/~dawnsong/" target="_blank" rel="noopener">
                 <img class="speaker-photo" src="assets/speakers/dawn-song.jpg" alt="Dawn Song">
@@ -1364,10 +1374,24 @@
               </a>
             </article>
             <article class="speaker-card">
+              <a class="speaker-profile-link" href="https://xiaocw11.github.io/" target="_blank" rel="noopener">
+                <img class="speaker-photo" src="assets/speakers/chaowei-xiao.jpg" alt="Chaowei Xiao">
+                <h3>Chaowei Xiao</h3>
+                <p>Johns Hopkins University / NVIDIA</p>
+              </a>
+            </article>
+            <article class="speaker-card">
               <a class="speaker-profile-link" href="https://metauto.ai/" target="_blank" rel="noopener">
                 <img class="speaker-photo" src="assets/speakers/mingchen-zhuge.webp" alt="Mingchen Zhuge">
                 <h3>Mingchen Zhuge</h3>
                 <p>Recursive Intelligence</p>
+              </a>
+            </article>
+            <article class="speaker-card">
+              <a class="speaker-profile-link" href="https://www.shikharmurty.com/" target="_blank" rel="noopener">
+                <img class="speaker-photo" src="assets/speakers/shikhar-murty.jpg" alt="Shikhar Murty">
+                <h3>Shikhar Murty</h3>
+                <p>DeepMind Gemini</p>
               </a>
             </article>
             <article class="speaker-card">
@@ -1395,24 +1419,39 @@
               <p class="section-kicker">Organizers</p>
               <h2>Workshop committee.</h2>
             </div>
-            <p class="section-lede">Confirmed organizers, affiliations, websites, and contact roles will be announced here.</p>
+            <p class="section-lede">The workshop is organized by researchers working across AI agents, multimodal foundation models, efficient learning, generative modeling, and evaluation.</p>
           </div>
 
           <div class="people-grid">
             <article class="people-card">
-              <span class="tag">General chairs</span>
-              <h3>Names TBA</h3>
-              <p>Lead organizers and primary points of contact.</p>
+              <img class="people-photo" src="assets/organizers/zhiqiang-shen.jpg" alt="Zhiqiang Shen">
+              <span class="tag">Organizer</span>
+              <h3><a href="https://zhiqiangshen.com/" target="_blank" rel="noopener">Zhiqiang Shen</a></h3>
+              <p>MBZUAI</p>
             </article>
             <article class="people-card">
-              <span class="tag">Review committee</span>
-              <h3>Review team TBA</h3>
-              <p>Area chairs, reviewers, and session leads can be listed here after confirmation.</p>
+              <img class="people-photo" src="assets/organizers/xinyi-shang.jpg" alt="Xinyi Shang">
+              <span class="tag">Organizer</span>
+              <h3><a href="https://shangxinyi.github.io/" target="_blank" rel="noopener">Xinyi Shang</a></h3>
+              <p>University College London</p>
             </article>
             <article class="people-card">
-              <span class="tag">Operations</span>
-              <h3>Website and logistics TBA</h3>
-              <p>Use this slot for proceedings, website, sponsor, demo, and local logistics roles.</p>
+              <img class="people-photo top" src="assets/organizers/jiacheng-liu.jpg" alt="Jiacheng Liu">
+              <span class="tag">Organizer</span>
+              <h3><a href="https://greenoso.github.io/" target="_blank" rel="noopener">Jiacheng Liu</a></h3>
+              <p>MBZUAI</p>
+            </article>
+            <article class="people-card">
+              <img class="people-photo" src="assets/organizers/jingyu-lin.jpg" alt="Jingyu Lin">
+              <span class="tag">Organizer</span>
+              <h3><a href="https://openreview.net/profile?id=%7EJingyu_Lin5" target="_blank" rel="noopener">Jingyu Lin</a></h3>
+              <p>Monash University</p>
+            </article>
+            <article class="people-card">
+              <img class="people-photo" src="assets/organizers/yaxin-luo.jpg" alt="Yaxin Luo">
+              <span class="tag">Organizer</span>
+              <h3><a href="https://yaxin9luo.github.io/" target="_blank" rel="noopener">Yaxin Luo</a></h3>
+              <p>MBZUAI</p>
             </article>
           </div>
         </div>
